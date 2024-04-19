@@ -3,7 +3,7 @@
 //PREFIX ROUTE   /income
 
 import express from "express";
-import { addGoal } from "../controllers/goalController";
+import { addGoal } from "../controllers/goalController.js";
 
 const router = express.Router();
 

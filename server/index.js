@@ -26,11 +26,11 @@ const app = express();
 app.use(express.json());
 
 app.use(
-	session({
-		secret: process.env.JWT_SECRET, // Use a strong secret in production
-		resave: true,
-		saveUninitialized: true,
-	})
+  session({
+    secret: process.env.JWT_SECRET, // Use a strong secret in production
+    resave: true,
+    saveUninitialized: true,
+  })
 );
 
 app.use(passport.initialize());
@@ -38,27 +38,26 @@ app.use(passport.session());
 
 // Google Auth Routes
 app.get(
-	"/auth/google",
-	passport.authenticate("google", { scope: ["profile", "email"] })
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 app.get(
-	"/auth/google/callback",
-	passport.authenticate("google", { failureRedirect: "/login" }),
-	(req, res) => {
-		// Successful authentication, redirect to front end with token.
-		const token = jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, {
-			expiresIn: "1h",
-		});
-		console.log(token);
-		res.redirect(`http://localhost:5173?token=${token}`);
-	}
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    // Successful authentication, redirect to front end with token.
+    const token = jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.redirect(`http://localhost:3000?token=${token}`);
+  }
 );
 
 // Middleware to attach user to req.user
 app.use((req, res, next) => {
-	req.user = req.isAuthenticated() ? req.session.passport.user : null;
-	next();
+  req.user = req.isAuthenticated() ? req.session.passport.user : null;
+  next();
 });
 
 app.use(cookieParser());
@@ -78,10 +77,10 @@ const PORT = process.env.PORT || 3011;
 connectDB();
 
 app.listen(PORT, () => {
-	console.log("Server started on port " + PORT);
+  console.log("Server started on port " + PORT);
 
-	/* Add data insertion functions below */
-	/* WARNING: Comment them and move them out of app.listen after one time insertion.*/
+  /* Add data insertion functions below */
+  /* WARNING: Comment them and move them out of app.listen after one time insertion.*/
 });
 
 // addPsychologicalTypes();

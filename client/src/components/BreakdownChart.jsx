@@ -5,7 +5,7 @@ import { Box, useTheme } from "@mui/material";
 const BreakdownChart = ({
   isDashboard = false,
   categories,
-  beSmall = false,
+  beSmall = true,
 }) => {
   const theme = useTheme();
 
@@ -26,7 +26,7 @@ const BreakdownChart = ({
       width={undefined}
       minHeight={isDashboard ? "325px" : undefined}
       minWidth={isDashboard ? "325px" : undefined}
-      position="absolute"
+      position="relative"
     >
       <ResponsivePie
         data={formattedData}
@@ -69,8 +69,8 @@ const BreakdownChart = ({
             : { top: 40, right: 80, bottom: 80, left: 80 }
         }
         sortByValue={true}
-        innerRadius={0.45}
-        activeOuterRadiusOffset={8}
+        innerRadius={0.4}
+        activeOuterRadiusOffset={6}
         enableArcLinkLabels={!isDashboard}
         borderWidth={1}
         borderColor={{
@@ -84,19 +84,17 @@ const BreakdownChart = ({
         }}
         legends={[
           {
-            anchor: "bottom",
+            anchor: "top-left",
             direction: "column",
             justify: false,
-            translateX: isDashboard ? 10 : 0,
-            translateY: isDashboard ? 10 : 56,
-            itemsSpacing: 5,
-            itemWidth: 150,
-            itemHeight: 20,
-            itemTextColor: "#999",
-            itemDirection: "left-to-right",
-            itemOpacity: 1,
+            translateX: 0,
+            translateY: 0,
+            itemWidth: 85,
+            itemHeight: 18,
+            itemsSpacing: 4,
             symbolSize: 18,
             symbolShape: "circle",
+            itemDirection: "left-to-right",
             effects: [
               {
                 on: "hover",

@@ -24,7 +24,7 @@ const Dashboard = () => {
     isError: expensesError,
   } = useGetAllExpensesQuery({ userId });
 
-  console.log(expensesData.expenses);
+  // console.log(expensesData?.expenses);
 
   // calculations to format data for pie chart
   const categoryTotals = {};
@@ -119,27 +119,29 @@ const Dashboard = () => {
 
         {/* pie chart */}
         <Box
-          gridColumn="span 8"
-          gridRow="span 3"
+          gridColumn="span 7"
+          gridRow="span 2"
           backgroundColor={theme.palette.background.alt}
           p="1.5rem"
           borderRadius="0.55rem"
         >
           <Typography
             variant="h3"
-            sx={{ color: theme.palette.secondary[100], fontWeight: "bold" }}
+            sx={{
+              color: theme.palette.secondary[100],
+              fontWeight: "bold",
+            }}
           >
             You Spent This Month
           </Typography>
           <BreakdownChart categories={categoryTotals} isDashboard={true} />
-          <Typography
+          {/* <Typography
             p="0 0.6rem"
             fontSize="0.8rem"
             sx={{ color: theme.palette.secondary[200] }}
           >
-            Breakdown of carbon footprint by the category in which it was
-            generated.
-          </Typography>
+            Breakdown of expenses by the category.
+          </Typography> */}
         </Box>
       </Box>
     </Box>

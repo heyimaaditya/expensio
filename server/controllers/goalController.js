@@ -1,6 +1,7 @@
 import Goal from "../models/Goal.js";
 
 const addGoal = async (req, res) => {
+	// console.log("reached controller addGoal");
 	try {
 		const {
 			name,
@@ -12,7 +13,7 @@ const addGoal = async (req, res) => {
 			endDate,
 			priority,
 		} = req.body;
-
+		console.log(priority);
 		// Validate required fields
 		if (!name || !type || !startDate || !endDate) {
 			return res.status(400).json({
@@ -27,15 +28,15 @@ const addGoal = async (req, res) => {
 					"At least one of the fields: minimum income or maximum expense, is required",
 			});
 		}
-		if (
-			priority &&
-			(priority !== "low" || priority !== "medium" || priority !== "high")
-		) {
-			return res.status(400).json({
-				success: false,
-				message: "Invalid priority value. It can be 'low', 'medium' or 'high'.",
-			});
-		}
+		// if (
+		// 	priority &&
+		// 	(priority !== "low" || priority !== "medium" || priority !== "high")
+		// ) {
+		// 	return res.status(400).json({
+		// 		success: false,
+		// 		message: "Invalid priority value. It can be 'low', 'medium' or 'high'.",
+		// 	});
+		// }
 
 		const newGoal = new Goal({
 			name,

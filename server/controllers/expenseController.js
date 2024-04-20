@@ -120,6 +120,7 @@ const addExpenseThroughText = async (req, res) => {
 
 //PRIVATE: GET @ /expense?start_date=2023-01-01&end_date=2023-01-31&search=office&categoryCode=financialServices&psychologicalTypeCode=impulseBuy&event=60aff925-ba3e-4b0c-91a9-7fcb145e4c31&mood=happy&page=1&pageSize=10
 const getExpenses = async (req, res) => {
+<<<<<<< HEAD
 	const {
 		start_date,
 		end_date,
@@ -148,6 +149,38 @@ const getExpenses = async (req, res) => {
 			return res.status(400).json({ message: "Invalid ID format." });
 		}
 	}
+=======
+  const {
+    start_date,
+    end_date,
+    search,
+    event,
+    categoryCode,
+    psychologicalTypeCode,
+    mood,
+    page,
+    pageSize,
+    id,
+    goalId,
+    userId,
+  } = req.query;
+
+  // If ID provided, return specific expense
+  if (id) {
+    try {
+      const expense = await Expense.findById({
+        _id: id,
+        userID: userId,
+      }).populate("category event psychologicalType");
+      if (!expense) {
+        return res.status(404).json({ message: "Expense not found." });
+      }
+      return res.status(200).json(expense);
+    } catch (error) {
+      return res.status(400).json({ message: "Invalid ID format." });
+    }
+  }
+>>>>>>> dc4aec8cdb3c5e864b52a8fe76a63b9291672995
 
 	try {
 		// Fetch category and psychologicalType by codes

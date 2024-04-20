@@ -186,7 +186,7 @@ const ExpenseListScreen = () => {
                 <MenuItem disabled>Loading Events...</MenuItem>
               ) : (
                 userEvents?.events?.map((event) => (
-                  <MenuItem key={event._id} value={event.name}>
+                  <MenuItem key={event.name} value={event.name}>
                     {event.name}
                   </MenuItem>
                 ))

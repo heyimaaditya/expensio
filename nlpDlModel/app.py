@@ -16,10 +16,10 @@ CORS(app)
 
 
 # Load the trained Bi-LSTM model
-model = load_model('C:\\Users\\ayaan\\Downloads\\hack_36 Project\\DL_Psy_Cat_Emotion\\bi_lstm_model.h5')
+model = load_model('C:\\Users\\HP\\Desktop\\hack36\\expensio\\nlpDlModel\\model\\bi_lstm_model.h5')
 
 # Load the tokenizer
-with open('C:\\Users\\ayaan\\Downloads\\hack_36 Project\\DL_Psy_Cat_Emotion\\tokenizer.pickle', 'rb') as handle:
+with open('C:\\Users\\HP\\Desktop\\hack36\\expensio\\nlpDlModel\\model\\tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 max_length = 50

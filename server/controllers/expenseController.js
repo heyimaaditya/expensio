@@ -8,6 +8,7 @@ import axios from "axios";
 
 import { textExpensePrompt } from "../data/aiPrompts.js";
 import { openaiApi } from "../utils/openai.js";
+import { toCamelCase } from "../utils/helpers.js";
 
 //************************************Routes START************************************//  all private unless mentioned otherwise
 
@@ -106,21 +107,53 @@ const addExpense = asyncHandler(async (req, res) => {
 
 const addExpenseThroughText = async (req, res) => {
 	const promptTemplate = textExpensePrompt;
-	const promptText = promptTemplate + ` ` + req.body.expenseText;
+	const inputText = req.body.expenseText;
+	if (!inputText) {
+		return res.status(400).json({ error: "No text provided" });
+	}
+
+	const promptText = promptTemplate + ` ` + inputText;
+	const flaskApiUrl = "http://127.0.0.1:8000/api/predict";
+
+	const data = {
+		inputText: inputText,
+	};
 
 	try {
 		const output = await openaiApi(promptText);
-		// console.log("API response:", output);
-		res.send(output);
+		if (output.answer) {
+			res
+				.status(400)
+				.json({ error: "Some Key Info or amount is missing from the text." });
+		}
+		const nlpModelResponse = await axios.post(flaskApiUrl, data);
+		const [psychTypeName, categoryName] = nlpModelResponse.data.outputText;
+		const psychologicalType = await PsychologicalType.findOne({
+			name: psychTypeName,
+		});
+		const category = await Category.findOne({ name: categoryName });
+		const nlpObj = {
+			category: category._id,
+			psychologicalType: psychologicalType._id,
+		};
+		const newExpense = new Expense({
+			...output,
+			...nlpObj,
+			userId: req.user._id,
+		});
+		newExpense.save();
+		res.status(201).json({
+			message: `Expense added successfully!`,
+			expense: newExpense,
+		});
 	} catch (error) {
-		console.error("Error when calling OpenAI API:", error.message);
-		res.status(500).send("Error calling OpenAI API");
+		console.error("Error when calling OpenAI API or NLP Model:", error.message);
+		res.status(500).send("Error calling OpenAI API or NLP Model");
 	}
 };
 
 //PRIVATE: GET @ /expense?start_date=2023-01-01&end_date=2023-01-31&search=office&categoryCode=financialServices&psychologicalTypeCode=impulseBuy&event=60aff925-ba3e-4b0c-91a9-7fcb145e4c31&mood=happy&page=1&pageSize=10
 const getExpenses = async (req, res) => {
-<<<<<<< HEAD
 	const {
 		start_date,
 		end_date,
@@ -133,14 +166,16 @@ const getExpenses = async (req, res) => {
 		pageSize,
 		id,
 		goalId,
+		userId,
 	} = req.query;
 
 	// If ID provided, return specific expense
 	if (id) {
 		try {
-			const expense = await Expense.findById(id).populate(
-				"category event psychologicalType"
-			);
+			const expense = await Expense.findById({
+				_id: id,
+				userID: userId,
+			}).populate("category event psychologicalType");
 			if (!expense) {
 				return res.status(404).json({ message: "Expense not found." });
 			}
@@ -149,38 +184,6 @@ const getExpenses = async (req, res) => {
 			return res.status(400).json({ message: "Invalid ID format." });
 		}
 	}
-=======
-  const {
-    start_date,
-    end_date,
-    search,
-    event,
-    categoryCode,
-    psychologicalTypeCode,
-    mood,
-    page,
-    pageSize,
-    id,
-    goalId,
-    userId,
-  } = req.query;
-
-  // If ID provided, return specific expense
-  if (id) {
-    try {
-      const expense = await Expense.findById({
-        _id: id,
-        userID: userId,
-      }).populate("category event psychologicalType");
-      if (!expense) {
-        return res.status(404).json({ message: "Expense not found." });
-      }
-      return res.status(200).json(expense);
-    } catch (error) {
-      return res.status(400).json({ message: "Invalid ID format." });
-    }
-  }
->>>>>>> dc4aec8cdb3c5e864b52a8fe76a63b9291672995
 
 	try {
 		// Fetch category and psychologicalType by codes

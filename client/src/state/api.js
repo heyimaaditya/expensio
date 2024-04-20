@@ -60,6 +60,40 @@ export const api = createApi({
         headers: DEFAULT_HEADERS,
       }),
     }),
+    getAllExpenses: build.query({
+      query: ({
+        start_date,
+        end_date,
+        search,
+        event,
+        categoryCode,
+        psychologicalTypeCode,
+        mood,
+        page,
+        pageSize,
+        id,
+        goalId,
+        userId,
+      }) => ({
+        url: `expense`,
+        method: "GET",
+        params: {
+          start_date,
+          end_date,
+          search,
+          event,
+          categoryCode,
+          psychologicalTypeCode,
+          mood,
+          page,
+          pageSize,
+          id,
+          goalId,
+          userId,
+        },
+        headers: DEFAULT_HEADERS,
+      }),
+    }),
   }),
 });
 
@@ -73,6 +107,8 @@ export const {
   useGetPsychologicalTypesQuery,
 
   useExpenseTestQuery,
+
+  useGetAllExpensesQuery,
 
   useSaveExpensesMutation,
   useGetAllCategoriesQuery,

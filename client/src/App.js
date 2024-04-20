@@ -18,6 +18,7 @@ import Dashboard from "./scenes/dashboard";
 import PrivateRoute from "components/PrivateRoute";
 import Layout from "scenes/layout";
 import AddExpenseScreen from "scenes/expense/add";
+import ExpenseListScreen from "scenes/expense/list";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -36,6 +37,7 @@ function App() {
               {/* general */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/expense/add" element={<AddExpenseScreen />} />
+              <Route path="/expense/list" element={<ExpenseListScreen />} />
             </Route>
           </Route>
 

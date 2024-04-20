@@ -115,14 +115,16 @@ const getExpenses = async (req, res) => {
     pageSize,
     id,
     goalId,
+    userId,
   } = req.query;
 
   // If ID provided, return specific expense
   if (id) {
     try {
-      const expense = await Expense.findById(id).populate(
-        "category event psychologicalType"
-      );
+      const expense = await Expense.findById({
+        _id: id,
+        userID: userId,
+      }).populate("category event psychologicalType");
       if (!expense) {
         return res.status(404).json({ message: "Expense not found." });
       }

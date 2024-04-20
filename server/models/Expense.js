@@ -50,15 +50,12 @@ const expenseSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
       maxlength: 300,
     },
     paymentMethod: {
-      type: [String],
-      validate: [
-        (str) => str.every((s) => s.length <= 40),
-        "Each string in the array should not exceed 40 characters",
-      ],
+      type: String,
+      maxlength: 200,
     },
     mood: {
       type: String,

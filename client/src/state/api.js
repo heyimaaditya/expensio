@@ -31,6 +31,35 @@ export const api = createApi({
         headers: DEFAULT_HEADERS,
       }),
     }),
+    saveExpenses: build.mutation({
+      query: (data) => ({
+        url: `expense/add`,
+        method: "POST",
+        body: data,
+        headers: DEFAULT_HEADERS,
+      }),
+    }),
+    getAllCategories: build.query({
+      query: () => ({
+        url: `category`,
+        method: "GET",
+        headers: DEFAULT_HEADERS,
+      }),
+    }),
+    getAllEvents: build.query({
+      query: () => ({
+        url: `event/all`,
+        method: "GET",
+        headers: DEFAULT_HEADERS,
+      }),
+    }),
+    getPsychologicalTypes: build.query({
+      query: () => ({
+        url: `psycho-types`,
+        method: "GET",
+        headers: DEFAULT_HEADERS,
+      }),
+    }),
   }),
 });
 
@@ -40,6 +69,11 @@ export const {
   useLogoutMutation,
 
   useGetUserQuery,
+  useGetAllEventsQuery,
+  useGetPsychologicalTypesQuery,
 
   useExpenseTestQuery,
+
+  useSaveExpensesMutation,
+  useGetAllCategoriesQuery,
 } = api;

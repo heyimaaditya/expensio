@@ -18,37 +18,40 @@ import Dashboard from "./scenes/dashboard";
 import PrivateRoute from "components/PrivateRoute";
 import Layout from "scenes/layout";
 import AddExpenseScreen from "scenes/expense/add";
+import AddGoalScreen from "scenes/addGoal";
 
 function App() {
-  const mode = useSelector((state) => state.global.mode);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ToastContainer />
+	const mode = useSelector((state) => state.global.mode);
+	const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+	return (
+		<BrowserRouter>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<ToastContainer />
 
-        <Routes>
-          <Route path="" element={<PrivateRoute />}>
-            <Route element={<Layout />}>
-              {" "}
-              {/* will exist on every page. Eg, navbar and sidebar. */}
-              {/* general */}
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/expense/add" element={<AddExpenseScreen />} />
-            </Route>
-          </Route>
+				<Routes>
+					<Route path="" element={<PrivateRoute />}>
+						<Route element={<Layout />}>
+							{" "}
+							{/* will exist on every page. Eg, navbar and sidebar. */}
+							<Route path="/dashboard" element={<Dashboard />} />
+							{/* expense */}
+							<Route path="/expense/add" element={<AddExpenseScreen />} />
+							{/* goals */}
+							<Route path="/goal/add" element={<AddGoalScreen />} />
+						</Route>
+					</Route>
 
-          <Route>
-            <Route index path="/" element={<HomeScreen />} />
+					<Route>
+						<Route index path="/" element={<HomeScreen />} />
 
-            <Route path="/login" element={<Login />} />
-            {/* <Route path="/register" element={<Register />} /> */}
-          </Route>
-        </Routes>
-      </ThemeProvider>
-    </BrowserRouter>
-  );
+						<Route path="/login" element={<Login />} />
+						{/* <Route path="/register" element={<Register />} /> */}
+					</Route>
+				</Routes>
+			</ThemeProvider>
+		</BrowserRouter>
+	);
 }
 
 export default App;

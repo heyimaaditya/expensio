@@ -153,8 +153,8 @@ const addExpenseThroughText = async (req, res) => {
 };
 
 const getExpenseById = async (req, res) => {
-	const { expenseId } = req.params;
-	//console.log(expenseId);
+	const { id: expenseId } = req.params;
+	// const expenseId = id;
 	try {
 		const expense = await Expense.findById(expenseId)
 			.populate("category event psychologicalType")

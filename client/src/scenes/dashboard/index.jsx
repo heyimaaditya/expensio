@@ -24,9 +24,7 @@ const Dashboard = () => {
 		isError: expensesError,
 	} = useGetAllExpensesQuery({ userId });
 
-	// console.log(expensesData?.expenses);
-
-	// calculations to format data for pie chart
+	// calculations to format data for pie chart of category
 	const categoryTotals = {};
 	expensesData?.expenses?.forEach((expense) => {
 		const { category, amount } = expense;
@@ -37,7 +35,18 @@ const Dashboard = () => {
 		}
 	});
 
-	console.log(categoryTotals);
+	// calculations to format data for pie chart of psychological type
+	const psychologicalTotals = {};
+	expensesData?.expenses?.forEach((expense) => {
+		const { psychologicalType, amount } = expense;
+		if (psychologicalType.name in psychologicalTotals) {
+			psychologicalTotals[psychologicalType.name] += amount;
+		} else {
+			psychologicalTotals[psychologicalType.name] = amount;
+		}
+	});
+
+	// console.log(categoryTotals);
 
 	return (
 		<Box m="1.5rem 2.5rem">
@@ -117,9 +126,9 @@ const Dashboard = () => {
 					</Box>
 				</Box>
 
-				{/* pie chart */}
+				{/* category pie chart */}
 				<Box
-					gridColumn="span 7"
+					gridColumn="span 6"
 					gridRow="span 2"
 					backgroundColor={theme.palette.background.alt}
 					p="1.5rem"
@@ -132,9 +141,37 @@ const Dashboard = () => {
 							fontWeight: "bold",
 						}}
 					>
-						You Spent This Month
+						Monthly Expense by Category
 					</Typography>
 					<BreakdownChart categories={categoryTotals} isDashboard={true} />
+					{/* <Typography
+            p="0 0.6rem"
+            fontSize="0.8rem"
+            sx={{ color: theme.palette.secondary[200] }}
+          >
+            Breakdown of expenses by the category.
+          </Typography> */}
+				</Box>
+
+				{/* Psychological Pie Chart */}
+
+				<Box
+					gridColumn="span 6"
+					gridRow="span 2"
+					backgroundColor={theme.palette.background.alt}
+					p="1.5rem"
+					borderRadius="0.55rem"
+				>
+					<Typography
+						variant="h3"
+						sx={{
+							color: theme.palette.secondary[100],
+							fontWeight: "bold",
+						}}
+					>
+						Monthly Expense by Psychology Type
+					</Typography>
+					<BreakdownChart categories={psychologicalTotals} isDashboard={true} />
 					{/* <Typography
             p="0 0.6rem"
             fontSize="0.8rem"

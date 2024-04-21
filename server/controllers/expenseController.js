@@ -152,6 +152,31 @@ const addExpenseThroughText = async (req, res) => {
   }
 };
 
+
+
+const getExpenseById = async (req, res) => {
+  const { expenseId } = req.params;
+	//console.log(expenseId);
+  try {
+    const expense = await Expense.findById(expenseId)
+      .populate("category event psychologicalType")
+      .exec();
+
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found." });
+    }
+
+    res.status(200).json(expense);
+  } catch (error) {
+    console.error("Error fetching expense by ID:", error);
+    res.status(500).json({
+      message: "Error fetching expense by ID due to internal server error.",
+    });
+  }
+};
+
+
+
 //PRIVATE: GET @ /expense?start_date=2023-01-01&end_date=2023-01-31&search=office&categoryCode=financialServices&psychologicalTypeCode=impulseBuy&event=60aff925-ba3e-4b0c-91a9-7fcb145e4c31&mood=happy&page=1&pageSize=10
 const getExpenses = async (req, res) => {
   const {
@@ -262,4 +287,4 @@ const getExpenses = async (req, res) => {
   }
 };
 
-export { getExpenses, expenseTest, addExpense, addExpenseThroughText };
+export { getExpenses, expenseTest, addExpense, addExpenseThroughText,getExpenseById };

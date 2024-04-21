@@ -22,6 +22,7 @@ import AddGoalScreen from "scenes/addGoal";
 import ExpenseListScreen from "scenes/expense/list";
 import AddExpenseThroughTextScreen from "scenes/expense/addText";
 import SummaryScreen from "scenes/summary";
+import ExpenseScreen from "scenes/expense/screen";
 
 function App() {
 	const mode = useSelector((state) => state.global.mode);
@@ -44,6 +45,7 @@ function App() {
 								path="/expense/add/text"
 								element={<AddExpenseThroughTextScreen />}
 							/>
+							<Route path="/expense/:id" element={<ExpenseScreen/>}/>
 							<Route path="/expense/list" element={<ExpenseListScreen />} />
 							{/* goals */}
 							<Route path="/goal/add" element={<AddGoalScreen />} />

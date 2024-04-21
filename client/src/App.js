@@ -25,44 +25,44 @@ import SummaryScreen from "scenes/summary";
 import ExpenseScreen from "scenes/expense/screen";
 
 function App() {
-	const mode = useSelector((state) => state.global.mode);
-	const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-	return (
-		<BrowserRouter>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<ToastContainer />
+  const mode = useSelector((state) => state.global.mode);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  return (
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ToastContainer />
 
-				<Routes>
-					<Route path="" element={<PrivateRoute />}>
-						<Route element={<Layout />}>
-							{" "}
-							{/* will exist on every page. Eg, navbar and sidebar. */}
-							<Route path="/dashboard" element={<Dashboard />} />
-							{/* expense */}
-							<Route path="/expense/add" element={<AddExpenseScreen />} />
-							<Route
-								path="/expense/add/text"
-								element={<AddExpenseThroughTextScreen />}
-							/>
-							<Route path="/expense/:id" element={<ExpenseScreen/>}/>
-							<Route path="/expense/list" element={<ExpenseListScreen />} />
-							{/* goals */}
-							<Route path="/goal/add" element={<AddGoalScreen />} />
-							<Route path="/user/summary" element={<SummaryScreen />} />
-						</Route>
-					</Route>
+        <Routes>
+          <Route path="" element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              {" "}
+              {/* will exist on every page. Eg, navbar and sidebar. */}
+              <Route path="/dashboard" element={<Dashboard />} />
+              {/* expense */}
+              <Route path="/expense/add" element={<AddExpenseScreen />} />
+              <Route
+                path="/expense/add/text"
+                element={<AddExpenseThroughTextScreen />}
+              />
+              <Route path="/expense/:id" element={<ExpenseScreen />} />
+              <Route path="/expense/list" element={<ExpenseListScreen />} />
+              {/* goals */}
+              <Route path="/goal/add" element={<AddGoalScreen />} />
+              <Route path="/user/summary" element={<SummaryScreen />} />
+            </Route>
+          </Route>
 
-					<Route>
-						<Route index path="/" element={<HomeScreen />} />
+          <Route>
+            <Route index path="/" element={<HomeScreen />} />
 
-						<Route path="/login" element={<Login />} />
-						{/* <Route path="/register" element={<Register />} /> */}
-					</Route>
-				</Routes>
-			</ThemeProvider>
-		</BrowserRouter>
-	);
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/register" element={<Register />} /> */}
+          </Route>
+        </Routes>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
 }
 
 export default App;

@@ -141,7 +141,7 @@ const Dashboard = () => {
               fontWeight: "bold",
             }}
           >
-            You Spent This Month
+            Monthly Expense by Category
           </Typography>
           <BreakdownChart categories={categoryTotals} isDashboard={true} />
           {/* <Typography
@@ -169,7 +169,7 @@ const Dashboard = () => {
               fontWeight: "bold",
             }}
           >
-            You Spent This Month
+            Monthly Expense by Psychology Type
           </Typography>
           <BreakdownChart categories={psychologicalTotals} isDashboard={true} />
           {/* <Typography

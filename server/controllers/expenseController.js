@@ -152,11 +152,9 @@ const addExpenseThroughText = async (req, res) => {
   }
 };
 
-
-
 const getExpenseById = async (req, res) => {
-  const { expenseId } = req.params;
-	//console.log(expenseId);
+  const { id: expenseId } = req.params;
+  // const expenseId = id;
   try {
     const expense = await Expense.findById(expenseId)
       .populate("category event psychologicalType")
@@ -174,8 +172,6 @@ const getExpenseById = async (req, res) => {
     });
   }
 };
-
-
 
 //PRIVATE: GET @ /expense?start_date=2023-01-01&end_date=2023-01-31&search=office&categoryCode=financialServices&psychologicalTypeCode=impulseBuy&event=60aff925-ba3e-4b0c-91a9-7fcb145e4c31&mood=happy&page=1&pageSize=10
 const getExpenses = async (req, res) => {
@@ -287,4 +283,10 @@ const getExpenses = async (req, res) => {
   }
 };
 
-export { getExpenses, expenseTest, addExpense, addExpenseThroughText,getExpenseById };
+export {
+  getExpenses,
+  expenseTest,
+  addExpense,
+  addExpenseThroughText,
+  getExpenseById,
+};

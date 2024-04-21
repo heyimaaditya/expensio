@@ -20,7 +20,10 @@ const AddExpenseThroughTextScreen = () => {
 	return (
 		<Box m="1.5rem 2.5rem">
 			<FlexBetween>
-				<Header title="DASHBOARD" subtitle="Keep track of your finances." />
+				<Header
+					title="ADD EXPENSE THROUGH TEXT"
+					subtitle="Type or speak to simply create your expenses on the go!"
+				/>
 
 				<Box>
 					<Button

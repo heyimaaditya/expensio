@@ -15,6 +15,7 @@ description: Additional context or explanation provided in the text.
 
 Error Handling:
 No amount: If no clear numerical amount is found, output: a stringified JSON with one key value pair as "answer":"none"
+Invalid Data: If invalid data, or you sense that this is not a transaction but something else, output: a stringified JSON with one key value pair as "answer":"none"
 Ambiguous mood: If the emotional state is difficult to determine, default to "neutral."
 Desired JSON Examples:
 
@@ -39,7 +40,7 @@ JSON
 export const userSummaryPrompt = `I am building a expense tracker app that helps find user find their relationship with money. So according to the expense data that I receive,
 
 I want to generate the summary for the user's relationship with money according to the number of transactions done in various psychologicalTypes and categories, total expenses, number of expenses. Return a .md file only, MAKE IT VERY SURE TO WRITE NOTHING ELSE. If there is no/inadequate data, mention it and in that case don't generate a detailed file but otherwise generate a very detailed motivating, and in depth report.
-
+Don't make it all data like, use text and offer in-depth analysis about the user's spending habits and everything else you know that.
 Please use any books AND research papers you can find about people and money, and generate me a summary of the person's strengths, where he needs to improve and what new he should do in order to be wealthy, and some details about their personality according to the data. 
 
 carefully mention all the books, online articles and research papers you use to build the summary.

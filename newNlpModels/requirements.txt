@@ -1,0 +1,8 @@
+Flask  # Web framework for building the Flask application
+tensorflow  # TensorFlow library for loading and using your Bi-LSTM model
+keras # Keras library for high-level neural networks API (included in TensorFlow 2.x)
+numpy  # NumPy for numerical operations, especially for preprocessing
+requests  # Library for making HTTP requests (optional, if needed for API communication)
+nltk  # Natural Language Toolkit for additional text processing (optional, if needed)
+scikit-learn==1.2.2  # Machine learning library for preprocessing or post-processing tasks (optional, if needed)
+flask-cors 

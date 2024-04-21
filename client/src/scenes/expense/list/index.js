@@ -156,8 +156,8 @@ const ExpenseListScreen = () => {
 					</Button>
 				</Box>
 			</FlexBetween>
-
-			<Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
+			<Box height="15px"></Box>
+			{/* <Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
 				<Box sx={{ width: "50%" }}>
 					<FlexBetween
 						backgroundColor={theme.palette.background.alt}
@@ -171,31 +171,7 @@ const ExpenseListScreen = () => {
 						</IconButton>
 					</FlexBetween>
 				</Box>
-
-				<Box sx={{ width: "50%" }}>
-					<FormControl fullWidth variant="outlined">
-						<InputLabel id="event-label">Event</InputLabel>
-						<Select
-							sx={{ ...backgroundColorStyle }}
-							labelId="event-label"
-							value={selectedUserEvent}
-							onChange={handleUserEventChange}
-							label="Event"
-						>
-							<MenuItem value="">None</MenuItem> {/* Add this line */}
-							{categoriesLoading ? (
-								<MenuItem disabled>Loading Events...</MenuItem>
-							) : (
-								userEvents?.events?.map((event) => (
-									<MenuItem key={event.name} value={event.name}>
-										{event.name}
-									</MenuItem>
-								))
-							)}
-						</Select>
-					</FormControl>
-				</Box>
-			</Box>
+			</Box> */}
 
 			{/* <Box> */}
 			<Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>

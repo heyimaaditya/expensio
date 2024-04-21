@@ -47,6 +47,17 @@ export const api = createApi({
         headers: DEFAULT_HEADERS,
       }),
     }),
+    transcribeAudio: build.mutation({
+      query: (audioFile) => ({
+        url: "general/audio-to-text",
+        method: "POST",
+        body: audioFile,
+        // Do not manually set Content-Type for FormData; let the browser handle it
+        headers: {
+          ...DEFAULT_HEADERS,
+        },
+      }),
+    }),
     getAllCategories: build.query({
       query: () => ({
         url: `category`,
@@ -148,5 +159,6 @@ export const {
 
   useSaveExpensesMutation,
   useSaveExpensesThroughTextMutation,
+  useTranscribeAudioMutation,
   useGetAllCategoriesQuery,
 } = api;

@@ -26,6 +26,7 @@
     "react-redux": "^8.1.0",
     "react-router-dom": "^6.12.1",
     "react-scripts": "5.0.1",
+    "react-speech-recognition": "^3.10.0",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
     "remark-gfm": "^4.0.0",

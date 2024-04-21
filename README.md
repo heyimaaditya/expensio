@@ -33,8 +33,8 @@ dynamic visualizations of expenditure patterns.
 * Clone the repository
 * Start these one by one in the terminal.
 * NLP model: go to newNlpModels folder and type commands: pip install -r requirements.txt, then python app2.py
-* backend: go to server folder, command: npm run dev
-* frontend: go to client folder, command: npm start
+* backend: go to server folder, command: npm install > npm run dev
+* frontend: go to client folder, command: npm install --force > npm start
 * and then you can visit the website at the react specified url.
 ALERT:: there is a .env file in server folder of the form
 ## .env file config

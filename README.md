@@ -29,6 +29,30 @@ dynamic visualizations of expenditure patterns.
   4) Flask
   5) MongoDB
   
+## How to run our app on your machine.
+1. Clone the repository
+2. Start these one by one in the terminal.
+    NLP model: go to newNlpModels folder and type commands: pip install -r requirements.txt, then python app2.py
+    backend: go to server folder, command: npm run dev
+    frontend: go to client folder, command: npm start
+
+3. and then you can visit the website at the react specified url.
+ALERT:: there is a .env file in server folder of the form
+
+PORT=5000
+MONGO_URI=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+JWT_SECRET=
+OPENAI_API_KEY=
+DEEPGRAM_API_KEY=
+
+similarly in client folder, .env.local is there of the format
+REACT_APP_BASE_URL=http://localhost:5000
+
+be sure to configure it for your use.
+
+
 
 ## Contributors:
 

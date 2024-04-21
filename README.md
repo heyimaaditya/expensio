@@ -32,11 +32,11 @@ dynamic visualizations of expenditure patterns.
 ## How to run our app on your machine.
 1. Clone the repository
 2. Start these one by one in the terminal.
-    NLP model: go to newNlpModels folder and type commands: pip install -r requirements.txt, then python app2.py
-    backend: go to server folder, command: npm run dev
-    frontend: go to client folder, command: npm start
+   3. NLP model: go to newNlpModels folder and type commands: pip install -r requirements.txt, then python app2.py
+   4. backend: go to server folder, command: npm run dev
+   5. frontend: go to client folder, command: npm start
 
-3. and then you can visit the website at the react specified url.
+5. and then you can visit the website at the react specified url.
 ALERT:: there is a .env file in server folder of the form
 
 PORT=5000

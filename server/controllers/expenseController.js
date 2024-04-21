@@ -114,41 +114,46 @@ const addExpenseThroughText = async (req, res) => {
 
 	const promptText = promptTemplate + ` ` + inputText;
 	const flaskApiUrl = "http://127.0.0.1:8000/api/predict";
-
-	const data = {
-		inputText: inputText,
-	};
+	const data = { inputText: inputText };
 
 	try {
 		const output = await openaiApi(promptText);
 		if (output.answer) {
-			res
+			return res
 				.status(400)
 				.json({ error: "Some Key Info or amount is missing from the text." });
 		}
+
 		const nlpModelResponse = await axios.post(flaskApiUrl, data);
 		const [psychTypeName, categoryName] = nlpModelResponse.data.outputText;
+
 		const psychologicalType = await PsychologicalType.findOne({
 			name: psychTypeName,
 		});
 		const category = await Category.findOne({ name: categoryName });
+
 		const nlpObj = {
 			category: category._id,
 			psychologicalType: psychologicalType._id,
 		};
+
 		const newExpense = new Expense({
 			...output,
 			...nlpObj,
 			userId: req.user._id,
 		});
-		newExpense.save();
-		res.status(201).json({
+		await newExpense.save();
+
+		return res.status(201).json({
 			message: `Expense added successfully!`,
 			expense: newExpense,
 		});
 	} catch (error) {
 		console.error("Error when calling OpenAI API or NLP Model:", error.message);
-		res.status(500).send("Error calling OpenAI API or NLP Model");
+		if (!res.headersSent) {
+			// Check if headers haven't been sent yet
+			res.status(500).send("Error calling OpenAI API or NLP Model");
+		}
 	}
 };
 

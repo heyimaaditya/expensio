@@ -1,6 +1,7 @@
 import FlexBetween from "components/FlexBetween";
 import React, { useState } from "react";
 import Header from "components/Header";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
@@ -20,10 +21,10 @@ import {
   TableCell,
   TableRow,
   TablePagination,
-  TableBody,
   TableContainer,
   Table,
   TableHead,
+  TableBody,
   InputBase,
   IconButton,
 } from "@mui/material";
@@ -55,14 +56,18 @@ const useStyles = makeStyles((theme) => ({
 const ExpenseListScreen = () => {
   const theme = useTheme();
   const classes = useStyles();
-
+  
   const [selectedCategoryCode, setSelectedCategoryCode] = useState("");
   const [selectedUserEvent, setSelectedUserEvent] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedMood, setSelectedMood] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
-
+  const handleCellClick = (id) => {
+    // Redirect to '/expense/:id' when a cell is clicked
+    console.log(/expense/${id});
+  };
+ 
   const userId = JSON.parse(localStorage.getItem("userInfoExpensio"))?._id;
 
   const {
@@ -346,7 +351,7 @@ const ExpenseListScreen = () => {
                       key={val._id}
                     >
                       <TableCell
-                        onClick={() => {}} // Placeholder onClick function
+                        onClick={() => handleCellClick(val._id)} // Placeholder onClick function
                         style={backgroundColorStyle}
                         className={classes.hoverCell}
                         key="serialno" // Assigning a key to serial number column
@@ -354,7 +359,18 @@ const ExpenseListScreen = () => {
                       >
                         {index + 1}
                       </TableCell>
-                      {columns.slice(1).map((column) => (
+                      {/* Wrapping title with Link */}
+                      <TableCell
+                        component={Link}
+                        to={/expense/${val._id}} // Redirecting to '/expense/:id'
+                        style={backgroundColorStyle}
+                        className={classes.hoverCell}
+                        key="title"
+                        align="center" // Adjust alignment as per requirement
+                      >
+                        {val.title}
+                      </TableCell>
+                      {columns.slice(2).map((column) => (
                         <TableCell
                           onClick={() => {}} // Placeholder onClick function
                           style={backgroundColorStyle}

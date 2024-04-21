@@ -4,407 +4,407 @@ import Header from "components/Header";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  CircularProgress,
-  FormControlLabel,
-  Checkbox,
-  useTheme,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  Paper,
-  TableCell,
-  TableRow,
-  TablePagination,
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  InputBase,
-  IconButton,
+	Box,
+	Typography,
+	TextField,
+	Button,
+	Grid,
+	CircularProgress,
+	FormControlLabel,
+	Checkbox,
+	useTheme,
+	MenuItem,
+	Select,
+	FormControl,
+	InputLabel,
+	Paper,
+	TableCell,
+	TableRow,
+	TablePagination,
+	TableContainer,
+	Table,
+	TableHead,
+	TableBody,
+	InputBase,
+	IconButton,
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import {
-  useGetAllExpensesQuery,
-  useGetAllCategoriesQuery,
-  useGetAllEventsQuery,
-  useGetPsychologicalTypesQuery,
+	useGetAllExpensesQuery,
+	useGetAllCategoriesQuery,
+	useGetAllEventsQuery,
+	useGetPsychologicalTypesQuery,
 } from "state/api";
 import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
-  tableHeader: {
-    backgroundColor: theme.palette.secondary,
-    color: "white",
-  },
-  hoverRow: {
-    "&:hover": {
-      backgroundColor: theme.palette.secondary, // Change this to your desired hover color
-      cursor: "pointer",
-      "& > *": {
-        color: "white", // Change this to your desired hover text color
-      },
-    },
-  },
+	tableHeader: {
+		backgroundColor: theme.palette.secondary,
+		color: "white",
+	},
+	hoverRow: {
+		"&:hover": {
+			backgroundColor: theme.palette.secondary, // Change this to your desired hover color
+			cursor: "pointer",
+			"& > *": {
+				color: "white", // Change this to your desired hover text color
+			},
+		},
+	},
 }));
 
 const ExpenseListScreen = () => {
-  const theme = useTheme();
-  const classes = useStyles();
-  
-  const [selectedCategoryCode, setSelectedCategoryCode] = useState("");
-  const [selectedUserEvent, setSelectedUserEvent] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedMood, setSelectedMood] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
-  const handleCellClick = (id) => {
-    // Redirect to '/expense/:id' when a cell is clicked
-    console.log(/expense/${id});
-  };
- 
-  const userId = JSON.parse(localStorage.getItem("userInfoExpensio"))?._id;
+	const theme = useTheme();
+	const classes = useStyles();
 
-  const {
-    data: userEvents,
-    isLoading: isLoadingEvents,
-    isError: eventsError,
-  } = useGetAllEventsQuery();
+	const [selectedCategoryCode, setSelectedCategoryCode] = useState("");
+	const [selectedUserEvent, setSelectedUserEvent] = useState("");
+	const [selectedType, setSelectedType] = useState("");
+	const [selectedMood, setSelectedMood] = useState("");
+	const [rowsPerPage, setRowsPerPage] = useState(10);
+	const [page, setPage] = useState(0);
+	const handleCellClick = (id) => {
+		// Redirect to '/expense/:id' when a cell is clicked
+		// console.log(/expense/${id});
+	};
 
-  const {
-    data: psychoTypesData,
-    isLoading: isLoadingPsychoTypes,
-    isError: psychoError,
-  } = useGetPsychologicalTypesQuery();
+	const userId = JSON.parse(localStorage.getItem("userInfoExpensio"))?._id;
 
-  const {
-    data: categoriesData,
-    isLoading: categoriesLoading,
-    isError: categoriesError,
-  } = useGetAllCategoriesQuery();
+	const {
+		data: userEvents,
+		isLoading: isLoadingEvents,
+		isError: eventsError,
+	} = useGetAllEventsQuery();
 
-  const {
-    data: expensesData,
-    isLoading: expensesLoading,
-    isError: expensesError,
-  } = useGetAllExpensesQuery({ userId });
+	const {
+		data: psychoTypesData,
+		isLoading: isLoadingPsychoTypes,
+		isError: psychoError,
+	} = useGetPsychologicalTypesQuery();
 
-  const backgroundColorStyle = {
-    backgroundColor: theme.palette.background.default,
-  };
+	const {
+		data: categoriesData,
+		isLoading: categoriesLoading,
+		isError: categoriesError,
+	} = useGetAllCategoriesQuery();
 
-  const handleCategoryChange = (event) => {
-    // console.log("cat" + event.target.value);
-    const value = event.target.value;
-    setSelectedCategoryCode(value === "" ? "" : value);
-  };
+	const {
+		data: expensesData,
+		isLoading: expensesLoading,
+		isError: expensesError,
+	} = useGetAllExpensesQuery({ userId });
 
-  const handleUserEventChange = (event) => {
-    // console.log("event" + event.target.value);
-    const value = event.target.value;
-    setSelectedUserEvent(value === "" ? "" : value);
-  };
+	const backgroundColorStyle = {
+		backgroundColor: theme.palette.background.default,
+	};
 
-  const handleTypeChange = (e) => {
-    const value = e.target.value;
-    setSelectedType(value === "" ? "" : value);
-  };
+	const handleCategoryChange = (event) => {
+		// console.log("cat" + event.target.value);
+		const value = event.target.value;
+		setSelectedCategoryCode(value === "" ? "" : value);
+	};
 
-  const handleMoodChange = (e) => {
-    const value = e.target.value;
-    setSelectedMood(value === "" ? "" : value);
-  };
+	const handleUserEventChange = (event) => {
+		// console.log("event" + event.target.value);
+		const value = event.target.value;
+		setSelectedUserEvent(value === "" ? "" : value);
+	};
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+	const handleTypeChange = (e) => {
+		const value = e.target.value;
+		setSelectedType(value === "" ? "" : value);
+	};
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+	const handleMoodChange = (e) => {
+		const value = e.target.value;
+		setSelectedMood(value === "" ? "" : value);
+	};
 
-  const columns = [
-    { id: "serialno", label: "Serial No.", minWidth: 120 },
-    { id: "title", label: "Title", minWidth: 120 },
-    { id: "category", label: "Category", minWidth: 120 },
-    { id: "amount", label: "Amount", minWidth: 120 },
-    { id: "dateTime", label: "Date Time", minWidth: 150 },
-    { id: "psychologicalType", label: "Psychological Type", minWidth: 150 },
-    { id: "mood", label: "Mood", minWidth: 120 },
-  ];
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
 
-  const moodData = ["Happy", "Neutral", "Regretful"];
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(+event.target.value);
+		setPage(0);
+	};
 
-  return (
-    <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Expense List" subtitle="Keep track of your finances." />
+	const columns = [
+		{ id: "serialno", label: "Serial No.", minWidth: 120 },
+		{ id: "title", label: "Title", minWidth: 120 },
+		{ id: "category", label: "Category", minWidth: 120 },
+		{ id: "amount", label: "Amount", minWidth: 120 },
+		{ id: "dateTime", label: "Date Time", minWidth: 150 },
+		{ id: "psychologicalType", label: "Psychological Type", minWidth: 150 },
+		{ id: "mood", label: "Mood", minWidth: 120 },
+	];
 
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            EXPENSIO
-          </Button>
-        </Box>
-      </FlexBetween>
+	const moodData = ["Happy", "Neutral", "Regretful"];
 
-      <Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
-        <Box sx={{ width: "50%" }}>
-          <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius="9px"
-            gap="3px"
-            p="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
-        </Box>
+	return (
+		<Box m="1.5rem 2.5rem">
+			<FlexBetween>
+				<Header title="Expense List" subtitle="Keep track of your finances." />
 
-        <Box sx={{ width: "50%" }}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="event-label">Event</InputLabel>
-            <Select
-              sx={{ ...backgroundColorStyle }}
-              labelId="event-label"
-              value={selectedUserEvent}
-              onChange={handleUserEventChange}
-              label="Event"
-            >
-              <MenuItem value="">None</MenuItem> {/* Add this line */}
-              {categoriesLoading ? (
-                <MenuItem disabled>Loading Events...</MenuItem>
-              ) : (
-                userEvents?.events?.map((event) => (
-                  <MenuItem key={event.name} value={event.name}>
-                    {event.name}
-                  </MenuItem>
-                ))
-              )}
-            </Select>
-          </FormControl>
-        </Box>
-      </Box>
+				<Box>
+					<Button
+						sx={{
+							backgroundColor: theme.palette.secondary.light,
+							color: theme.palette.background.alt,
+							fontSize: "14px",
+							fontWeight: "bold",
+							padding: "10px 20px",
+						}}
+					>
+						EXPENSIO
+					</Button>
+				</Box>
+			</FlexBetween>
 
-      {/* <Box> */}
-      <Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
-        <Box sx={{ width: "50%" }}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="category-label">Category</InputLabel>
-            <Select
-              sx={{ ...backgroundColorStyle }}
-              labelId="category-label"
-              value={selectedCategoryCode}
-              onChange={handleCategoryChange}
-              label="Category"
-            >
-              <MenuItem value="">None</MenuItem> {/* Add this line */}
-              {categoriesLoading ? (
-                <MenuItem disabled>Loading categories...</MenuItem>
-              ) : (
-                categoriesData?.categories?.map((category) => (
-                  <MenuItem key={category.code} value={category.code}>
-                    {category.name}
-                  </MenuItem>
-                ))
-              )}
-            </Select>
-          </FormControl>
-        </Box>
+			<Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
+				<Box sx={{ width: "50%" }}>
+					<FlexBetween
+						backgroundColor={theme.palette.background.alt}
+						borderRadius="9px"
+						gap="3px"
+						p="0.1rem 1.5rem"
+					>
+						<InputBase placeholder="Search..." />
+						<IconButton>
+							<Search />
+						</IconButton>
+					</FlexBetween>
+				</Box>
 
-        <Box sx={{ width: "50%" }}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="event-label">Event</InputLabel>
-            <Select
-              sx={{ ...backgroundColorStyle }}
-              labelId="event-label"
-              value={selectedUserEvent}
-              onChange={handleUserEventChange}
-              label="Event"
-            >
-              <MenuItem value="">None</MenuItem> {/* Add this line */}
-              {categoriesLoading ? (
-                <MenuItem disabled>Loading Events...</MenuItem>
-              ) : (
-                userEvents?.events?.map((event) => (
-                  <MenuItem key={event._id} value={event.name}>
-                    {event.name}
-                  </MenuItem>
-                ))
-              )}
-            </Select>
-          </FormControl>
-        </Box>
-      </Box>
-      {/* </Box> */}
+				<Box sx={{ width: "50%" }}>
+					<FormControl fullWidth variant="outlined">
+						<InputLabel id="event-label">Event</InputLabel>
+						<Select
+							sx={{ ...backgroundColorStyle }}
+							labelId="event-label"
+							value={selectedUserEvent}
+							onChange={handleUserEventChange}
+							label="Event"
+						>
+							<MenuItem value="">None</MenuItem> {/* Add this line */}
+							{categoriesLoading ? (
+								<MenuItem disabled>Loading Events...</MenuItem>
+							) : (
+								userEvents?.events?.map((event) => (
+									<MenuItem key={event.name} value={event.name}>
+										{event.name}
+									</MenuItem>
+								))
+							)}
+						</Select>
+					</FormControl>
+				</Box>
+			</Box>
 
-      <Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
-        <Box sx={{ width: "50%" }}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="type-label">Type</InputLabel>
-            <Select
-              sx={{ ...backgroundColorStyle }}
-              labelId="type-label"
-              value={selectedType}
-              onChange={handleTypeChange}
-              label="type"
-            >
-              <MenuItem value="">None</MenuItem> {/* Add this line */}
-              {isLoadingPsychoTypes ? (
-                <MenuItem disabled>Loading Psychological types...</MenuItem>
-              ) : (
-                psychoTypesData?.psychologicalTypes?.map((type) => (
-                  <MenuItem key={type._id} value={type.name}>
-                    {type.name}
-                  </MenuItem>
-                ))
-              )}
-            </Select>
-          </FormControl>
-        </Box>
+			{/* <Box> */}
+			<Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
+				<Box sx={{ width: "50%" }}>
+					<FormControl fullWidth variant="outlined">
+						<InputLabel id="category-label">Category</InputLabel>
+						<Select
+							sx={{ ...backgroundColorStyle }}
+							labelId="category-label"
+							value={selectedCategoryCode}
+							onChange={handleCategoryChange}
+							label="Category"
+						>
+							<MenuItem value="">None</MenuItem> {/* Add this line */}
+							{categoriesLoading ? (
+								<MenuItem disabled>Loading categories...</MenuItem>
+							) : (
+								categoriesData?.categories?.map((category) => (
+									<MenuItem key={category.code} value={category.code}>
+										{category.name}
+									</MenuItem>
+								))
+							)}
+						</Select>
+					</FormControl>
+				</Box>
 
-        <Box sx={{ width: "50%" }}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="mood-label">Mood</InputLabel>
-            <Select
-              sx={{ ...backgroundColorStyle }}
-              labelId="mood-label"
-              value={selectedMood}
-              onChange={handleMoodChange}
-              label="Mood"
-            >
-              {/* {categoriesLoading ? (
+				<Box sx={{ width: "50%" }}>
+					<FormControl fullWidth variant="outlined">
+						<InputLabel id="event-label">Event</InputLabel>
+						<Select
+							sx={{ ...backgroundColorStyle }}
+							labelId="event-label"
+							value={selectedUserEvent}
+							onChange={handleUserEventChange}
+							label="Event"
+						>
+							<MenuItem value="">None</MenuItem> {/* Add this line */}
+							{categoriesLoading ? (
+								<MenuItem disabled>Loading Events...</MenuItem>
+							) : (
+								userEvents?.events?.map((event) => (
+									<MenuItem key={event._id} value={event.name}>
+										{event.name}
+									</MenuItem>
+								))
+							)}
+						</Select>
+					</FormControl>
+				</Box>
+			</Box>
+			{/* </Box> */}
+
+			<Box sx={{ display: "flex", gap: "1.5rem", padding: "1 rem" }}>
+				<Box sx={{ width: "50%" }}>
+					<FormControl fullWidth variant="outlined">
+						<InputLabel id="type-label">Type</InputLabel>
+						<Select
+							sx={{ ...backgroundColorStyle }}
+							labelId="type-label"
+							value={selectedType}
+							onChange={handleTypeChange}
+							label="type"
+						>
+							<MenuItem value="">None</MenuItem> {/* Add this line */}
+							{isLoadingPsychoTypes ? (
+								<MenuItem disabled>Loading Psychological types...</MenuItem>
+							) : (
+								psychoTypesData?.psychologicalTypes?.map((type) => (
+									<MenuItem key={type._id} value={type.name}>
+										{type.name}
+									</MenuItem>
+								))
+							)}
+						</Select>
+					</FormControl>
+				</Box>
+
+				<Box sx={{ width: "50%" }}>
+					<FormControl fullWidth variant="outlined">
+						<InputLabel id="mood-label">Mood</InputLabel>
+						<Select
+							sx={{ ...backgroundColorStyle }}
+							labelId="mood-label"
+							value={selectedMood}
+							onChange={handleMoodChange}
+							label="Mood"
+						>
+							{/* {categoriesLoading ? (
                 <MenuItem disabled>Loading Mood...</MenuItem>
               ) : ( */}
-              <MenuItem value="">None</MenuItem> {/* Add this line */}
-              {moodData.map((mood) => (
-                <MenuItem key={mood} value={mood}>
-                  {mood}
-                </MenuItem>
-              ))}
-              {/* )} */}
-            </Select>
-          </FormControl>
-        </Box>
-      </Box>
+							<MenuItem value="">None</MenuItem> {/* Add this line */}
+							{moodData.map((mood) => (
+								<MenuItem key={mood} value={mood}>
+									{mood}
+								</MenuItem>
+							))}
+							{/* )} */}
+						</Select>
+					</FormControl>
+				</Box>
+			</Box>
 
-      <Box sx={{ margin: "2 rem" }}>
-        <Paper sx={{ margin: "2 rem", width: "90%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 580 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      className={classes.tableHeader}
-                      key={column.id}
-                      align="center" // Adjust alignment as per requirement
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {expensesData?.expenses
-                  .filter((expense) =>
-                    selectedCategoryCode
-                      ? expense.category.code === selectedCategoryCode
-                      : true
-                  )
-                  .filter((expense) =>
-                    selectedUserEvent
-                      ? expense.event?.name === selectedUserEvent
-                      : true
-                  )
-                  .filter((expense) =>
-                    selectedMood
-                      ? expense.mood === selectedMood.toLowerCase()
-                      : true
-                  )
-                  .filter((expense) =>
-                    selectedType
-                      ? expense.psychologicalType.name === selectedType
-                      : true
-                  )
-                  .map((val, index) => (
-                    <TableRow
-                      className={classes.hoverRow}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={val._id}
-                    >
-                      <TableCell
-                        onClick={() => handleCellClick(val._id)} // Placeholder onClick function
-                        style={backgroundColorStyle}
-                        className={classes.hoverCell}
-                        key="serialno" // Assigning a key to serial number column
-                        align="center" // Adjust alignment as per requirement
-                      >
-                        {index + 1}
-                      </TableCell>
-                      {/* Wrapping title with Link */}
-                      <TableCell
-                        component={Link}
-                        to={/expense/${val._id}} // Redirecting to '/expense/:id'
-                        style={backgroundColorStyle}
-                        className={classes.hoverCell}
-                        key="title"
-                        align="center" // Adjust alignment as per requirement
-                      >
-                        {val.title}
-                      </TableCell>
-                      {columns.slice(2).map((column) => (
-                        <TableCell
-                          onClick={() => {}} // Placeholder onClick function
-                          style={backgroundColorStyle}
-                          className={classes.hoverCell}
-                          key={column.id}
-                          align="center" // Adjust alignment as per requirement
-                        >
-                          {column.id === "category"
-                            ? val.category.name
-                            : column.id === "psychologicalType"
-                            ? val.psychologicalType?.name ?? ""
-                            : column.id === "dateTime"
-                            ? new Date(val.dateTime).toLocaleString()
-                            : val[column.id]}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 20, 30, 50]}
-            component="div"
-            count={expensesData?.total ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </Box>
-    </Box>
-  );
+			<Box sx={{ margin: "2 rem" }}>
+				<Paper sx={{ margin: "2 rem", width: "90%", overflow: "hidden" }}>
+					<TableContainer sx={{ maxHeight: 580 }}>
+						<Table stickyHeader aria-label="sticky table">
+							<TableHead>
+								<TableRow>
+									{columns.map((column) => (
+										<TableCell
+											className={classes.tableHeader}
+											key={column.id}
+											align="center" // Adjust alignment as per requirement
+											style={{ minWidth: column.minWidth }}
+										>
+											{column.label}
+										</TableCell>
+									))}
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{expensesData?.expenses
+									.filter((expense) =>
+										selectedCategoryCode
+											? expense.category.code === selectedCategoryCode
+											: true
+									)
+									.filter((expense) =>
+										selectedUserEvent
+											? expense.event?.name === selectedUserEvent
+											: true
+									)
+									.filter((expense) =>
+										selectedMood
+											? expense.mood === selectedMood.toLowerCase()
+											: true
+									)
+									.filter((expense) =>
+										selectedType
+											? expense.psychologicalType.name === selectedType
+											: true
+									)
+									.map((val, index) => (
+										<TableRow
+											className={classes.hoverRow}
+											role="checkbox"
+											tabIndex={-1}
+											key={val._id}
+										>
+											<TableCell
+												onClick={() => handleCellClick(val._id)} // Placeholder onClick function
+												style={backgroundColorStyle}
+												className={classes.hoverCell}
+												key="serialno" // Assigning a key to serial number column
+												align="center" // Adjust alignment as per requirement
+											>
+												{index + 1}
+											</TableCell>
+											{/* Wrapping title with Link */}
+											<TableCell
+												component={Link}
+												to={`/expense/${val._id}`} // Redirecting to '/expense/:id'
+												style={backgroundColorStyle}
+												className={classes.hoverCell}
+												key="title"
+												align="center" // Adjust alignment as per requirement
+											>
+												{val.title}
+											</TableCell>
+											{columns.slice(2).map((column) => (
+												<TableCell
+													onClick={() => {}} // Placeholder onClick function
+													style={backgroundColorStyle}
+													className={classes.hoverCell}
+													key={column.id}
+													align="center" // Adjust alignment as per requirement
+												>
+													{column.id === "category"
+														? val.category.name
+														: column.id === "psychologicalType"
+														? val.psychologicalType?.name ?? ""
+														: column.id === "dateTime"
+														? new Date(val.dateTime).toLocaleString()
+														: val[column.id]}
+												</TableCell>
+											))}
+										</TableRow>
+									))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+					<TablePagination
+						rowsPerPageOptions={[10, 20, 30, 50]}
+						component="div"
+						count={expensesData?.total ?? 0}
+						rowsPerPage={rowsPerPage}
+						page={page}
+						onPageChange={handleChangePage}
+						onRowsPerPageChange={handleChangeRowsPerPage}
+					/>
+				</Paper>
+			</Box>
+		</Box>
+	);
 };
 
 export default ExpenseListScreen;

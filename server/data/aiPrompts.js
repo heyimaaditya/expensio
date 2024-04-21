@@ -12,7 +12,6 @@ mood: Inferred emotional state (happy, neutral, regretful). Consider keywords an
 
 Optional Keys (Include ONLY if clearly applicable):
 description: Additional context or explanation provided in the text.
-dateTime: if date and time of the transaction are included, then include this field otherwise don't.
 
 Error Handling:
 No amount: If no clear numerical amount is found, output: a stringified JSON with one key value pair as "answer":"none"

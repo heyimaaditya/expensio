@@ -6,7 +6,7 @@ The core concept of our project revolves around creating a comprehensive finance
 application aimed at providing users with deep insights into their financial behaviors and patterns. Users will be able to add & enter their expenses either in a text format, audio format or within a form. It will also generate a summary based on user's expenditure and show interactive visualization based on user's expenditure patterns.
   
 ## Demo Video Link:
-  <a href="https://drive.google.com/file/d/1SOqLrYua4-6ZEd56ObwVbo-72KgPQo8d/view?usp=drive_link">DEMO VIDEO</a>
+  <a href="https://www.youtube.com/watch?v=XEhIceoMLqA">DEMO VIDEO</a>
   
 ## Presentation Link:
   <a href="https://docs.google.com/presentation/d/1moo9b8EZUZbV4WbBYdu9PhNtmDve2ULe/edit?usp=sharing&ouid=107629110929782106381&rtpof=true&sd=true"> PPT link here </a>

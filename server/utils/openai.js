@@ -39,6 +39,7 @@ export const openaiApiSummary = async function getOpenAIResponse(userPrompt) {
 	};
 	const data = {
 		model: "gpt-3.5-turbo",
+		// model: "gpt-4-turbo-2024-04-09",
 		messages: [
 			{
 				role: "system",
